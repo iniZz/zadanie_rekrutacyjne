@@ -19,6 +19,7 @@ class IndexController extends AbstractController
         print_r($currencyArray);
         return $this->render('Index/index.html.twig', [
             'message' => 'Index Controller',
+            'currency' => $currencyArray,
         ]);
     }
 }
