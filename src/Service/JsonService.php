@@ -20,5 +20,23 @@ class JsonService
     
         return $array;
     }
+
+    public function getRepeat($content , $content2){
+    
+        $array = array();
+        foreach($content as $mydata)
+        {
+            foreach ($content2 as $key => $value) {
+                // print_r($value);
+                if ($mydata->getCurrencyCode() == $value['code'] ) {
+                    // echo $value['code'];
+                    array_push($array, array("currency" => $value['currency'], "code" => $value['code'],"mid" => $value['mid']));
+                }
+            }
+                
+           
+        }
+        return $array;
+     }
     
 }
