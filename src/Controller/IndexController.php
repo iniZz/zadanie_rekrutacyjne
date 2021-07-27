@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\Api;
 use App\Service\JsonService;
+use App\Service\CurrencyService;
 
 use App\Entity\Currency;
 
@@ -16,14 +17,16 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-    public function index(Api $api, JsonService $jsonService): Response
+    public function index(Api $api, JsonService $jsonService, CurrencyService $currencyService): Response
     {
         $currencyArray =$jsonService->ConvertToArray($api->GetFromAPI('http://api.nbp.pl/api/exchangerates/tables/A?format=JSON'));
         
         $currencyAll= $this->getDoctrine()->getRepository(Currency::class)->findAll();
 
         $currencyRepeat = $jsonService->getRepeat($currencyAll, $currencyArray);
-        print_r($currencyRepeat);
+        
+        $currencyService->Update($currencyRepeat);
+
         return $this->render('Index/index.html.twig', [
             'message' => 'Index Controller',
             'currency' => $currencyArray,

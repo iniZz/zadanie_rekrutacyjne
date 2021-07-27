@@ -47,4 +47,16 @@ class CurrencyRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    
+    public function findOneByCodeField($value): ?Currency
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.currency_code = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    
 }
