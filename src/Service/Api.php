@@ -2,11 +2,13 @@
 
 namespace App\Service;
 
-
+use App\Service\JsonService;
 use Symfony\Component\HttpClient\HttpClient;
 
 class Api
 {
+    
+
     public function GetFromAPI($url)
     {
         $client = HttpClient::create();
@@ -15,8 +17,9 @@ class Api
         $statusCode = $response->getStatusCode();
         if ($statusCode == 200) {
             $content = $response->getContent();
-            print_r($content);
-            die();
+            
+
+            return $content;
             
         }
         
