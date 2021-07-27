@@ -8,18 +8,18 @@
 
 <table style="width:100%">
   <tr>
-    <th>Currency 2</th>
-    <th>Code 2</th>
-    <th>Mid 2</th>
+    <th>Currency</th>
+    <th>Code</th>
+    <th>Mid</th>
   </tr>
     
 
     {% for item in currency %}
         <tr>
-                <td>{{ item.currency }}</td>
-                <td>{{ item.code }}</td>
-                <td>{{ item.mid }}</td>
-            </tr> 
+            <td>{{ item.currency }}</td>
+            <td>{{ item.code }}</td>
+            <td>{{ item.mid }}</td>
+        </tr> 
     {% endfor %}
 
 </table>

@@ -20,12 +20,22 @@ class IndexController extends AbstractController
     public function index(Api $api, JsonService $jsonService, CurrencyService $currencyService): Response
     {
         $currencyArray =$jsonService->ConvertToArray($api->GetFromAPI('http://api.nbp.pl/api/exchangerates/tables/A?format=JSON'));
-        
-        $currencyAll= $this->getDoctrine()->getRepository(Currency::class)->findAll();
+        if ($currencyArray != null) {
+            $currencyAll= $this->getDoctrine()->getRepository(Currency::class)->findAll();
 
-        $currencyRepeat = $jsonService->getRepeat($currencyAll, $currencyArray);
+            $currencyRepeat = $jsonService->getRepeat($currencyAll, $currencyArray);
+            
+            if (count($currencyRepeat)!=0) {
+                $currencyService->Update($currencyRepeat);
+            }
+    
+            $currencyNew = $jsonService->getNew($currencyAll, $currencyArray);
+            
+            if (count($currencyNew)>0) {
+                $currencyService->Insert($currencyNew);
+            }
+        }
         
-        $currencyService->Update($currencyRepeat);
 
         return $this->render('Index/index.html.twig', [
             'message' => 'Index Controller',
